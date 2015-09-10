@@ -5,7 +5,7 @@
 
   var include = function (zippedData, datum) {
     var i, elem;
-    var idProperty = datum.strategy.idProperty
+    var idProperty = datum.strategy.idProperty;
     for (i = 0; i < zippedData.length; i++) {
       elem = zippedData[i];
       if (elem.strategy !== datum.strategy) continue;
@@ -161,6 +161,7 @@
 
     activate: function () {
       if (!this.shown) {
+        this.wasActivated = true;
         this.clear();
         this.$el.show();
         if (this.className) { this.$el.addClass(this.className); }

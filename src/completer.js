@@ -208,14 +208,15 @@
       }
       return []
     },
-
+    wasActivated: false,
     // Call the search method of selected strategy..
     _search: lock(function (free, strategy, term, match) {
       var self = this;
       strategy.search(term, function (data, stillSearching) {
         if (!self.dropdown.shown) {
           self.dropdown.activate();
-          self.dropdown.setPosition(self.adapter.getCaretPosition());
+          if (self.wasActivated)
+            self.dropdown.setPosition(self.adapter.getCaretPosition());
         }
         if (self._clearAtNext) {
           // The first callback in the current lock.

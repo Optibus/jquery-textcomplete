@@ -283,14 +283,15 @@ if (typeof jQuery === 'undefined') {
       }
       return []
     },
-
+    wasActivated: false,
     // Call the search method of selected strategy..
     _search: lock(function (free, strategy, term, match) {
       var self = this;
       strategy.search(term, function (data, stillSearching) {
         if (!self.dropdown.shown) {
           self.dropdown.activate();
-          self.dropdown.setPosition(self.adapter.getCaretPosition());
+          if (self.wasActivated)
+            self.dropdown.setPosition(self.adapter.getCaretPosition());
         }
         if (self._clearAtNext) {
           // The first callback in the current lock.
@@ -329,7 +330,7 @@ if (typeof jQuery === 'undefined') {
 
   var include = function (zippedData, datum) {
     var i, elem;
-    var idProperty = datum.strategy.idProperty
+    var idProperty = datum.strategy.idProperty;
     for (i = 0; i < zippedData.length; i++) {
       elem = zippedData[i];
       if (elem.strategy !== datum.strategy) continue;
@@ -485,6 +486,7 @@ if (typeof jQuery === 'undefined') {
 
     activate: function () {
       if (!this.shown) {
+        this.wasActivated = true;
         this.clear();
         this.$el.show();
         if (this.className) { this.$el.addClass(this.className); }
@@ -1021,6 +1023,7 @@ if (typeof jQuery === 'undefined') {
         pre = pre.replace(strategy.match, newSubstr);
         this.$el.val(pre + post);
         this.el.selectionStart = this.el.selectionEnd = pre.length;
+        this.wasActivated = false;
       }
     },
 

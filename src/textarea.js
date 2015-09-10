@@ -41,6 +41,7 @@
         pre = pre.replace(strategy.match, newSubstr);
         this.$el.val(pre + post);
         this.el.selectionStart = this.el.selectionEnd = pre.length;
+        this.wasActivated = false;
       }
     },
 
